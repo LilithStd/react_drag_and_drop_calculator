@@ -31,7 +31,65 @@ export const calculatorSlice = createSlice({
      resultView (state, action:PayloadAction<number>) {
       state.resultView = action.payload
 
-    }
+    },
+    resultCalculator (state)  {
+        switch (state.operator) {
+            case ('/'):
+                state.result = state.firstDigit / state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            case ('x'):
+                state.result = state.firstDigit * state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            case ('-'):
+                state.result = state.firstDigit - state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            case ('+'):
+                state.result = state.firstDigit + state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            default:
+                
+        }
+         
+    },
+    firstDigit (state, action:PayloadAction<number>) {
+      state.firstDigit = action.payload
+
+    },
+    secondDigit (state, action:PayloadAction<number>) {
+      state.secondDigit = action.payload
+    },
+    prevResult (state) {
+      state.resultBoolean = true
+    },
+    operator (state, action:PayloadAction<string>) {
+      state.operator = action.payload
+    },
+    resultBoolean( state, action: PayloadAction<boolean>) {
+      state.resultBoolean = action.payload
+    },
   }
 })
+
+export const { resultCalculator, firstDigit, secondDigit, prevResult, resultBoolean, operator, resultView} = calculatorSlice.actions
+
 export default calculatorSlice.reducer
