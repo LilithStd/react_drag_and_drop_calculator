@@ -1,0 +1,24 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.flex-container  {
+  width: 100%;
+  height: 100vh;
+  border: 3px solid rgb(172, 118, 18);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap:wrap
+
+}
+
+.flex-element {
+  border: 2px solid rgba(151, 151, 13, 0.61);
+  width: 200px;
+  height: 200px;
+}
