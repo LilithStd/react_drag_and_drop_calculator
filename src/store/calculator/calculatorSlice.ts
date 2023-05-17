@@ -33,6 +33,7 @@ export const calculatorSlice = createSlice({
 
     },
     resultCalculator (state)  {
+
         switch (state.operator) {
             case ('/'):
                 state.result = state.firstDigit / state.secondDigit
@@ -41,6 +42,7 @@ export const calculatorSlice = createSlice({
                 state.firstDigit = 0
                 state.secondDigit = 0
                 state.operator = ''
+                state.resultBoolean = false
                 break
             case ('x'):
                 state.result = state.firstDigit * state.secondDigit
@@ -71,6 +73,47 @@ export const calculatorSlice = createSlice({
         }
          
     },
+        resultCalculatorPrev (state)  {
+
+        switch (state.operator) {
+            case ('/'):
+                state.result = state.prevResult / state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                state.resultBoolean = false
+                break
+            case ('x'):
+                state.result = state.prevResult * state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            case ('-'):
+                state.result = state.prevResult - state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            case ('+'):
+                state.result = state.prevResult + state.secondDigit
+                state.resultView = state.result
+                state.prevResult = state.result
+                state.firstDigit = 0
+                state.secondDigit = 0
+                state.operator = ''
+                break
+            default:
+                
+        }
+         
+    },
     firstDigit (state, action:PayloadAction<number>) {
       state.firstDigit = action.payload
 
@@ -78,8 +121,8 @@ export const calculatorSlice = createSlice({
     secondDigit (state, action:PayloadAction<number>) {
       state.secondDigit = action.payload
     },
-    prevResult (state) {
-      state.resultBoolean = true
+    prevResult (state, action: PayloadAction<boolean>) {
+      state.resultBoolean = action.payload
     },
     operator (state, action:PayloadAction<string>) {
       state.operator = action.payload
@@ -90,6 +133,6 @@ export const calculatorSlice = createSlice({
   }
 })
 
-export const { resultCalculator, firstDigit, secondDigit, prevResult, resultBoolean, operator, resultView} = calculatorSlice.actions
+export const { resultCalculator, firstDigit, secondDigit, prevResult, resultBoolean, operator, resultView, resultCalculatorPrev} = calculatorSlice.actions
 
 export default calculatorSlice.reducer

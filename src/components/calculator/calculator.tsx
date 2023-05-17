@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../store/hook'
-import { firstDigit, secondDigit, resultCalculator, prevResult, operator, resultView } from '../../store/calculator/calculatorSlice'
+import { firstDigit, secondDigit, resultCalculator, prevResult, operator, resultView, resultCalculatorPrev } from '../../store/calculator/calculatorSlice'
 import { DIGITS, OPERATORS } from '../../const/calculator'
 import './calculator.scss'
 
@@ -9,6 +9,7 @@ export const Calculator = () => {
     const operatorStatus = useAppSelector(state => state.calculatorReducer.operator)
     const firstNumber = useAppSelector(state => state.calculatorReducer.firstDigit)
     const secondNumber = useAppSelector(state => state.calculatorReducer.secondDigit)
+    const previousResult = useAppSelector(state => state.calculatorReducer.prevResult)
     const resultBoolean = useAppSelector(state => state.calculatorReducer.resultBoolean)
     const resultViewer = useAppSelector(state => state.calculatorReducer.resultView)
 
@@ -43,6 +44,15 @@ export const Calculator = () => {
         dispatch(resultView(tempResult))
     }
 
+    const resultHandler = () => {
+        if (resultBoolean) {
+            dispatch(resultCalculatorPrev())
+        } else {
+            dispatch(resultCalculator())
+            dispatch(prevResult(true))
+        }
+    }
+
     return (
         <div className="container">
             <h1 className="visually-hidden">Calculator</h1>
@@ -70,8 +80,7 @@ export const Calculator = () => {
             </div>
             <button className="block-get-result"
                 onClick={() => {
-                    dispatch(resultCalculator())
-                    dispatch(prevResult())
+                    resultHandler()
                 }}
             >
                 =
