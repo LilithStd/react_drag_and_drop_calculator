@@ -4,3 +4,7 @@ export const DIGITS = [
 export const OPERATORS = [
     '/', 'x', '-', '+'
 ]
+
+export const ACTIONS = {
+    RESET_ERROR : '',
+}
