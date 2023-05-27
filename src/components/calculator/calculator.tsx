@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../store/hook'
-import { firstDigit, secondDigit, resultCalculator, prevResult, operator, resultView, setError } from '../../store/calculator/calculatorSlice'
+import { firstDigit, secondDigit, resultCalculator, prevResult, operator, resultView, setError, setDot, clearCalculator } from '../../store/calculator/calculatorSlice'
 import { ACTIONS, DIGITS, OPERATORS } from '../../const/calculator'
 import './calculator.scss'
 
@@ -9,48 +9,83 @@ export const Calculator = () => {
     const operatorStatus = useAppSelector(state => state.calculatorReducer.operator)
     const firstNumber = useAppSelector(state => state.calculatorReducer.firstDigit)
     const secondNumber = useAppSelector(state => state.calculatorReducer.secondDigit)
-    // const previousResult = useAppSelector(state => state.calculatorReducer.prevResult)
     const error = useAppSelector(state => state.calculatorReducer.error)
     const resultBoolean = useAppSelector(state => state.calculatorReducer.resultBoolean)
     const resultViewer = useAppSelector(state => state.calculatorReducer.resultView)
 
-    const numberHandler = (number: number) => {
-        let tempResult = 0
+    const numberHandler = (number: string) => {
+        let tempResult = '0'
 
         if (error !== '') {
             dispatch(setError(ACTIONS.RESET_ERROR))
         }
 
-        if (firstNumber === 0 && operatorStatus === '') {
+        if (firstNumber === '0' && operatorStatus === '') {
             tempResult = number
             dispatch(firstDigit(tempResult))
         }
-        if (firstNumber !== 0 && operatorStatus === '' && secondNumber === 0) {
-            tempResult = Number(`${firstNumber}${number}`)
+        if (firstNumber !== '0' && operatorStatus === '' && secondNumber === '0') {
+            tempResult = `${firstNumber}${number}`
             dispatch(firstDigit(tempResult))
-
         }
-        if (firstNumber !== 0 && operatorStatus !== '' && secondNumber === 0) {
+        if (firstNumber !== '0' && operatorStatus !== '' && secondNumber === '0') {
             tempResult = number
             dispatch(secondDigit(tempResult))
         }
-        if (firstNumber !== 0 && operatorStatus !== '' && secondNumber !== 0) {
-            tempResult = Number(`${secondNumber}${number}`)
+        if (firstNumber !== '0' && operatorStatus !== '' && secondNumber !== '0') {
+            tempResult = `${secondNumber}${number}`
             dispatch(secondDigit(tempResult))
         }
         if (resultBoolean && operatorStatus !== '') {
-            tempResult = Number(`${secondNumber}${number}`)
+            tempResult = `${secondNumber}${number}`
+
             dispatch(secondDigit(tempResult))
         }
-        dispatch(resultView(tempResult))
+
+        if (number === '.') {
+            if (firstNumber !== '0' && !firstNumber.includes('.')) {
+                tempResult = `${firstNumber}${number}`
+                console.log(tempResult);
+
+                dispatch(firstDigit(tempResult))
+            }
+
+            if (firstNumber !== '0' && secondNumber !== '0' && !firstNumber.includes('.') && !secondNumber.includes('.')) {
+                tempResult = `${secondNumber}${number}`
+                console.log(tempResult);
+
+                dispatch(secondDigit(tempResult))
+            }
+
+
+
+        }
+
+
+        if (firstNumber.includes('.') && secondNumber === '0' && operatorStatus === '') {
+            tempResult = `${firstNumber}${number}`
+            console.log(tempResult);
+
+            dispatch(firstDigit(tempResult))
+        }
+
+        if (secondNumber.includes('.') && firstNumber !== '0' && operatorStatus !== '') {
+            tempResult = `${secondNumber}${number}`
+            console.log(tempResult);
+
+            dispatch(secondDigit(tempResult))
+        }
+
+        dispatch(resultView(parseFloat(tempResult)))
     }
 
     const resultHandler = () => {
         dispatch(resultCalculator())
         dispatch(prevResult(true))
-        console.log(error);
-        console.log(resultBoolean);
+    }
 
+    const clearResultHandler = () => {
+        dispatch(clearCalculator())
     }
 
     return (
@@ -75,8 +110,12 @@ export const Calculator = () => {
                             numberHandler(item)
                         }}>{item}</button>
                 ))}
-                <button className="numbers-item">,</button>
-                <button className="numbers-item">C</button>
+
+                <button className="numbers-item"
+                    onClick={() => {
+                        clearResultHandler()
+                    }}
+                >C</button>
             </div>
             <button className="block-get-result"
                 onClick={() => {
