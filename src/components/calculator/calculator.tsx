@@ -37,46 +37,79 @@ export const Calculator = () => {
             dispatch(secondDigit(tempResult))
         }
         if (resultBoolean && operatorStatus !== '') {
-            tempResult = `${secondNumber}${number}`
+            if (secondNumber === '0') {
+                tempResult = number
+                dispatch(secondDigit(tempResult))
+            }
+            if (secondNumber !== '0') {
+                console.log('prev result + second number');
 
-            dispatch(secondDigit(tempResult))
+                tempResult = `${secondNumber}${number}`
+                dispatch(secondDigit(tempResult))
+            }
+            if (number === '.') {
+                tempResult = `${secondNumber}${number}`
+                dispatch(secondDigit(tempResult))
+            }
         }
 
         if (number === '.') {
             if (firstNumber !== '0' && !firstNumber.includes('.')) {
                 tempResult = `${firstNumber}${number}`
-                console.log(tempResult);
-
                 dispatch(firstDigit(tempResult))
             }
 
             if (firstNumber !== '0' && secondNumber !== '0' && !firstNumber.includes('.') && !secondNumber.includes('.')) {
                 tempResult = `${secondNumber}${number}`
-                console.log(tempResult);
-
                 dispatch(secondDigit(tempResult))
             }
 
+            if (firstNumber === '0' && secondNumber === '0' && operatorStatus === '') {
+                tempResult = `${firstNumber}${number}`
+                dispatch(firstDigit(tempResult))
+            }
 
+            if (secondNumber === '0' && firstNumber !== '0' && operatorStatus !== '') {
+                tempResult = `${secondNumber}${number}`
+                dispatch(secondDigit(tempResult))
+            }
 
         }
 
-
         if (firstNumber.includes('.') && secondNumber === '0' && operatorStatus === '') {
-            tempResult = `${firstNumber}${number}`
-            console.log(tempResult);
+            if (number !== '.') {
+                tempResult = `${firstNumber}${number}`
+                dispatch(firstDigit(tempResult))
+            }
 
-            dispatch(firstDigit(tempResult))
+            if (number === '.') {
+                tempResult = firstNumber
+                dispatch(firstDigit(tempResult))
+            }
+
+            if (number === '.' && firstNumber === '0') {
+                console.log('test');
+
+            }
+
         }
 
         if (secondNumber.includes('.') && firstNumber !== '0' && operatorStatus !== '') {
-            tempResult = `${secondNumber}${number}`
-            console.log(tempResult);
+            console.log('2nd number');
 
-            dispatch(secondDigit(tempResult))
+            if (number !== '.') {
+                tempResult = `${secondNumber}${number}`
+                dispatch(secondDigit(tempResult))
+            }
+            if (number === '.') {
+                tempResult = secondNumber
+                dispatch(secondDigit(tempResult))
+            }
         }
 
-        dispatch(resultView(parseFloat(tempResult)))
+
+
+        dispatch(resultView(tempResult))
     }
 
     const resultHandler = () => {

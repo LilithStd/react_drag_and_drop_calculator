@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 // Define a type for the slice state
 interface CalculatorState {
   result: number,
-  resultView: number,
+  resultView: string,
   firstDigit: string,
   secondDigit: string,
   operator: string,
@@ -17,11 +17,11 @@ interface CalculatorState {
 // Define the initial state using that type
 const initialState: CalculatorState = {
   result: 0,
-  resultView: 0,
+  resultView: '0',
   firstDigit: '0',
   secondDigit: '0',
   operator: '',
-  prevResult: '',
+  prevResult: '0',
   resultBoolean: false,
   dotBoolean:false,
   error:''
@@ -32,7 +32,7 @@ export const calculatorSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-     resultView (state, action:PayloadAction<number>) {
+     resultView (state, action:PayloadAction<string>) {
       state.resultView = action.payload
 
     },
@@ -40,6 +40,7 @@ export const calculatorSlice = createSlice({
       if(state.firstDigit === '0') {
         state.firstDigit = state.prevResult
       }
+
       const firstDigit = parseFloat(state.firstDigit)
       const secondDigit = parseFloat(state.secondDigit)
 
@@ -50,10 +51,11 @@ export const calculatorSlice = createSlice({
                   state.firstDigit = '0'
                   state.secondDigit = '0'
                   state.operator = ''
+                  state.prevResult = '0'
                   break
                 }
                 state.result = firstDigit / secondDigit
-                state.resultView = state.result
+                state.resultView = parseFloat(state.result.toFixed(2)).toString()
                 state.prevResult = state.result.toString()
                 state.firstDigit = '0'
                 state.secondDigit = '0'
@@ -62,7 +64,7 @@ export const calculatorSlice = createSlice({
                 break
             case ('x'):
                 state.result = firstDigit * secondDigit
-                state.resultView = state.result
+                state.resultView = parseFloat(state.result.toFixed(2)).toString()
                 state.prevResult = state.result.toString()
                 state.firstDigit = '0'
                 state.secondDigit = '0'
@@ -70,7 +72,7 @@ export const calculatorSlice = createSlice({
                 break
             case ('-'):
                 state.result = firstDigit - secondDigit
-                state.resultView = state.result
+                state.resultView = parseFloat(state.result.toFixed(2)).toString()
                 state.prevResult = state.result.toString()
                 state.firstDigit = '0'
                 state.secondDigit = '0'
@@ -78,7 +80,7 @@ export const calculatorSlice = createSlice({
                 break
             case ('+'):
                 state.result = firstDigit + secondDigit
-                state.resultView = state.result
+                state.resultView = parseFloat(state.result.toFixed(2)).toString()
                 state.prevResult = state.result.toString()
                 state.firstDigit = '0'
                 state.secondDigit = '0'
@@ -118,7 +120,7 @@ export const calculatorSlice = createSlice({
       state.prevResult = '0',
       state.error = '',
       state.result = 0,
-      state.resultView = 0,
+      state.resultView = '0',
       state.resultBoolean = false,
       state.dotBoolean = false
     }
