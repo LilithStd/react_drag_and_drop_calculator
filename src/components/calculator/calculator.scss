@@ -4,6 +4,10 @@
     gap: 20px;
     border-radius: 15px;
     width: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .block-result {
@@ -16,6 +20,7 @@
     padding-right: 10px;
     padding-top: 10px;
     font-size: 30px;
+    width: 95%;
 }
 
 .block-operators {

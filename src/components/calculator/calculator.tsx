@@ -4,7 +4,7 @@ import { ACTIONS, DIGITS, OPERATORS } from '../../const/calculator'
 import './calculator.scss'
 
 
-export const Calculator = () => {
+export default function Calculator() {
     const dispatch = useAppDispatch()
     const operatorStatus = useAppSelector(state => state.calculatorReducer.operator)
     const firstNumber = useAppSelector(state => state.calculatorReducer.firstDigit)
