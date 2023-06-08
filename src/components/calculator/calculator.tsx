@@ -122,7 +122,7 @@ export default function Calculator() {
     }
 
     return (
-        <div className="container">
+        <div className="container grid-element-calculator">
             <h1 className="visually-hidden">Calculator</h1>
             <div className="block-result">{error ? error : resultViewer}</div>
             <div className="block-operators">

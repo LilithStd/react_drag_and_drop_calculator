@@ -8,7 +8,7 @@ export default function SwitcherModes() {
     const [active, setActive] = useState({ id: '1' })
 
     return (
-        <div className="switcher-container">
+        <div className="switcher-container grid-element-switcher">
             <div className={`runtime switcher-item ${active.id === '1' ? 'switcher-active' : ''} `}
                 onClick={() => {
                     setActive(

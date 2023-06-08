@@ -3,22 +3,42 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.flex-container  {
-  width: 100%;
-  height: 100vh;
-  border: 3px solid rgb(172, 118, 18);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap:wrap
+.visually-hidden {
+  display: none;
+}
+
+.grid-element-calculator-template{
 
 }
 
-.flex-element {
-  border: 2px solid rgba(151, 151, 13, 0.61);
-  width: 200px;
-  height: 200px;
+.grid-element-calculator {
+
+}
+
+.grid-element-switcher {
+  grid-column: 2/2;
+}
+
+.ramp {
+  background-color: red;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ramp-2 {
+  height: 50px;
+  grid-column: 2/2;
+}
+
+.ramp-3, .ramp-4 {
+  height: 300px;
 }
