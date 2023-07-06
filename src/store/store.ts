@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import calculatorReducer from './calculator/calculatorSlice';
+import constructorReducer from './constructor/constructorSlice';
 
 
 export const rootReducer = combineReducers({
-  calculatorReducer
+  calculatorReducer,
+  constructorReducer
 });
 
 export const setupStore = ()  =>  {

@@ -1,32 +1,42 @@
-import { useState } from 'react'
 import './switcherModes.scss'
+import { useAppDispatch, useAppSelector } from '../../store/hook'
+import { constructorMode, mode, pickedElement } from '../../store/constructor/constructorSlice'
+import { CONSTRUCTOR_MODE } from '../../const/calculator'
 
 
 
 
 export default function SwitcherModes() {
-    const [active, setActive] = useState({ id: '1' })
+    const dispatch = useAppDispatch()
+    const statusConstructor = useAppSelector(state => state.constructorReducer.mode)
+
+    const switchModeCalcalatorHandler = (mode: boolean) => {
+        dispatch(constructorMode(mode))
+    }
+
+    const statusCalculatorHandler = (status: string) => {
+        dispatch(mode(status))
+    }
+
 
     return (
         <div className="switcher-container grid-element-switcher">
-            <div className={`runtime switcher-item ${active.id === '1' ? 'switcher-active' : ''} `}
+            <div className={`runtime switcher-item ${statusConstructor === CONSTRUCTOR_MODE.RUNTIME ? 'switcher-active' : ''} `}
                 onClick={() => {
-                    setActive(
-                        { id: '1' }
-                    )
+                    statusCalculatorHandler(CONSTRUCTOR_MODE.RUNTIME)
+                    switchModeCalcalatorHandler(false)
                 }}
             >
-                <img className="icons" src={`src/assets/icons/${active.id === '1' ? 'eye-active.svg' : 'eye-inactive.svg'}`} width={40} height={40} alt="Runtime mode" />
+                <img className="icons" src={`src/assets/icons/${statusConstructor === CONSTRUCTOR_MODE.RUNTIME ? 'eye-active.svg' : 'eye-inactive.svg'}`} width={40} height={40} alt="Runtime mode" />
                 <p className="switcher-item-title" >Runtime</p>
             </div>
-            <div className={`constructor switcher-item ${active.id === '2' ? 'switcher-active' : ''} `}
+            <div className={`constructor switcher-item ${statusConstructor === CONSTRUCTOR_MODE.CONSTRUCTOR ? 'switcher-active' : ''} `}
                 onClick={() => {
-                    setActive(
-                        { id: '2' }
-                    )
+                    statusCalculatorHandler(CONSTRUCTOR_MODE.CONSTRUCTOR)
+                    switchModeCalcalatorHandler(true)
                 }}
             >
-                <img className="icons" src={`src/assets/icons/${active.id === '2' ? 'selector-active.svg' : 'selector-inactive.svg '}`} width={40} height={40} alt="Selector mode" />
+                <img className="icons" src={`src/assets/icons/${statusConstructor === CONSTRUCTOR_MODE.CONSTRUCTOR ? 'selector-active.svg' : 'selector-inactive.svg '}`} width={40} height={40} alt="Selector mode" />
                 <p className="switcher-item-title">Constructor</p>
             </div>
         </div>

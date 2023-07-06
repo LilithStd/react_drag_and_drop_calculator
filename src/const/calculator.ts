@@ -8,3 +8,8 @@ export const OPERATORS = [
 export const ACTIONS = {
     RESET_ERROR : '',
 }
+
+export const CONSTRUCTOR_MODE = {
+    RUNTIME: 'runtime',
+    CONSTRUCTOR: 'constructor'
+}

@@ -1,6 +1,5 @@
 .container {
     // background-color: rgba(19, 19, 19, 0.726);
-    display: grid;
     gap: 20px;
     border-radius: 15px;
     width: 440px;
@@ -9,6 +8,8 @@
     justify-content: center;
     align-items: center;
 }
+
+
 
 .block-result {
     background-color: rgb(24, 24, 24);
